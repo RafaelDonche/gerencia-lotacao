@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EspacoCafeController;
+use App\Http\Controllers\PessoaController;
+use App\Http\Controllers\SalaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +17,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+    return redirect()->route('dashboard');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::group(['prefix' => '/salas', 'as' => 'salas.'], function () {
+    Route::get('/index', [SalaController::class, 'index'])->name('index');
+    Route::post('/store', [SalaController::class, 'store'])->name('store');
+    Route::post('/update/{id}', [SalaController::class, 'update'])->name('update');
+    Route::post('/destroy/{id}', [SalaController::class, 'destroy'])->name('destroy');
+});
+
+Route::group(['prefix' => '/espacoCafes', 'as' => 'espacoCafes.'], function () {
+    Route::get('/index', [EspacoCafeController::class, 'index'])->name('index');
+    Route::post('/store', [EspacoCafeController::class, 'store'])->name('store');
+    Route::post('/update/{id}', [EspacoCafeController::class, 'update'])->name('update');
+    Route::post('/destroy/{id}', [EspacoCafeController::class, 'destroy'])->name('destroy');
+});
+
+Route::group(['prefix' => '/pessoas', 'as' => 'pessoas.'], function () {
+    Route::get('/index', [PessoaController::class, 'index'])->name('index');
+    Route::post('/store', [PessoaController::class, 'store'])->name('store');
+    Route::post('/update/{id}', [PessoaController::class, 'update'])->name('update');
+    Route::post('/destroy/{id}', [PessoaController::class, 'destroy'])->name('destroy');
 });
