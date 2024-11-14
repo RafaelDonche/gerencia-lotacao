@@ -50,8 +50,7 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Lotação</th>
-                                <th>Gerenciar participantes</th>
-                                <th>Ações</th>
+                                <th class="text-right">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,12 +58,10 @@
                                 <tr>
                                     <td>{{ $sala->nome }}</td>
                                     <td>{{ $sala->lotacao }}</td>
-                                    <td>
+                                    <td class="text-right">
                                         <a class="btn btn-primary" href="{{ route('salas.show', $sala->id) }}">
-                                            <i class="fas fa-eye"></i>
+                                            <i class="fas fa-eye"></i> Gerenciar participantes
                                         </a>
-                                    </td>
-                                    <td>
                                         <a class="btn btn-secondary" href="{{ route('salas.edit', $sala->id) }}">
                                             <i class="fas fa-pen"></i>
                                         </a>
@@ -84,6 +81,12 @@
                                             </div>
                                             <form action="{{ route('salas.destroy', $sala->id) }}" method="POST">
                                                 @csrf
+                                                <div class="modal-body">
+                                                    <div class="col-md-12 text-justify">
+                                                        A exclusão de uma sala resulta na desvinculação de todas as pessoas que estão
+                                                        vinculadas a esta sala.
+                                                    </div>
+                                                </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-danger btn-pill">Excluir</button>
                                                     <button type="button" data-dismiss="modal" class="btn btn-secondary btn-pill">Cancelar</button>

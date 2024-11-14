@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SalaFormRequest;
+use App\Http\Requests\VinculacaoFormRequest;
 use App\Models\Pessoa;
 use App\Models\Sala;
 use Illuminate\Http\Request;
@@ -86,8 +87,110 @@ class SalaController extends Controller
         }
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        //
+        try {
+
+            $sala = Sala::findOrFail($id);
+
+            // desvincula todas as pessoas que tinham $id na primeira sala
+            Pessoa::where('id_primeira_sala', $id)
+                ->update(['id_primeira_sala' => null]);
+
+            // desvincula todas as pessoas que tinham $id na segunda sala
+            Pessoa::where('id_segunda_sala', $id)
+                ->update(['id_segunda_sala' => null]);
+
+            $sala->delete();
+
+            Alert::toast('Cadastro excluído com sucesso!', 'success');
+            return redirect()->back();
+
+        } catch (\Exception $ex) {
+            Alert::error('Erro!', $ex->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function vincularParticipantesEtapa1(VinculacaoFormRequest $request, $id)
+    {
+        try {
+
+            $sala = Sala::find($id);
+
+            if (!$sala) {
+                Alert::toast('A sala não foi encontrada!', 'error');
+                return redirect()->back();
+            }
+
+            $validated = $request->validated();
+            $participantes = $validated['pessoas_etapa1'];
+
+            if (!is_array($participantes)) {
+                Alert::toast('Houve um erro ao obter os participantes selecionados!', 'error');
+                return redirect()->back();
+            }
+
+            if ((count($sala->pessoas_etapa1) + count($participantes)) > $sala->lotacao) {
+                Alert::toast('A quantidade de participantes selecionados ultrapassou a lotação!', 'error');
+                return redirect()->back();
+            }
+
+            foreach ($participantes as $id_participante) {
+                $pessoa = Pessoa::find($id_participante);
+
+                if ($pessoa) {
+                    $pessoa->update(['id_primeira_sala' => $id]);
+                }
+            }
+
+            Alert::toast('Vinculações realizadas com sucesso!', 'success');
+            return redirect()->back();
+
+        } catch (\Exception $ex) {
+            Alert::error('Erro!', $ex->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function vincularParticipantesEtapa2(VinculacaoFormRequest $request, $id)
+    {
+        try {
+
+            $sala = Sala::find($id);
+
+            if (!$sala) {
+                Alert::toast('A sala não foi encontrada!', 'error');
+                return redirect()->back();
+            }
+
+            $validated = $request->validated();
+            $participantes = $validated['pessoas_etapa2'];
+
+            if (!is_array($participantes)) {
+                Alert::toast('Houve um erro ao obter os participantes selecionados!', 'error');
+                return redirect()->back();
+            }
+
+            if ((count($sala->pessoas_etapa2) + count($participantes)) > $sala->lotacao) {
+                Alert::toast('A quantidade de participantes selecionados ultrapassou a lotação!', 'error');
+                return redirect()->back();
+            }
+
+            foreach ($participantes as $id_participante) {
+                $pessoa = Pessoa::find($id_participante);
+
+                if ($pessoa) {
+                    $pessoa->update(['id_segunda_sala' => $id]);
+                }
+            }
+
+            Alert::toast('Vinculações realizadas com sucesso!', 'success');
+            return redirect()->back();
+
+        } catch (\Exception $ex) {
+            Alert::error('Erro!', $ex->getMessage());
+            return redirect()->back();
+        }
     }
 }

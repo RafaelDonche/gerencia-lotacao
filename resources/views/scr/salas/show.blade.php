@@ -27,7 +27,7 @@
                     <hr class="mt-0">
                 </div>
                 @if (count($sala->pessoas_etapa1) < $sala->lotacao)
-                    <form action="" method="post" class="form_prevent_multiple_submits">
+                    <form action="{{ route('salas.vincularParticipantesEtapa1', $sala->id) }}" method="post" class="form_prevent_multiple_submits">
                         @csrf
                         <div class="col-md-12 mb-3">
                             <label class="form-label" for="pessoas_etapa1">Participantes disponíveis</label>
@@ -61,7 +61,7 @@
                     <hr class="mt-0">
                 </div>
                 @if (count($sala->pessoas_etapa2) < $sala->lotacao)
-                <form action="" method="post" class="form_prevent_multiple_submits">
+                <form action="{{ route('salas.vincularParticipantesEtapa2', $sala->id) }}" method="post" class="form_prevent_multiple_submits">
                     @csrf
                     <div class="col-md-12 mb-3">
                         <label class="form-label" for="pessoas_etapa2">Participantes disponíveis</label>
@@ -105,17 +105,18 @@
                             <thead>
                                 <tr>
                                     <th>Nome e sobrenome</th>
-                                    <th>Ações</th>
+                                    <th class="text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($sala->pessoas_etapa1 as $pessoa)
                                     <tr>
                                         <td>{{ $pessoa->nome }} {{ $pessoa->sobrenome }}</td>
-                                        <td>
+                                        <td class="text-right">
                                             <button class="btn btn-danger"
-                                                onclick="desvincular(this, {{ route('pessoas.desvincularPrimeiraEtapa', $pessoa->id) }})">
-                                                Desvincular <i class="fas fa-trash"></i>
+                                                onclick="desvincular(this)"
+                                                rota="{{ route('pessoas.desvincularPrimeiraEtapa', $pessoa->id) }}">
+                                                <i class="fas fa-trash"></i> Desvincular
                                             </button>
                                         </td>
                                     </tr>
@@ -136,17 +137,18 @@
                             <thead>
                                 <tr>
                                     <th>Nome e sobrenome</th>
-                                    <th>Ações</th>
+                                    <th class="text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($sala->pessoas_etapa2 as $pessoa)
                                     <tr>
                                         <td>{{ $pessoa->nome }} {{ $pessoa->sobrenome }}</td>
-                                        <td>
+                                        <td class="text-right">
                                             <button class="btn btn-danger"
-                                                onclick="desvincular(this, {{ route('pessoas.desvincularSegundaEtapa', $pessoa->id) }})">
-                                                Desvincular <i class="fas fa-trash"></i>
+                                                onclick="desvincular(this)"
+                                                rota="{{ route('pessoas.desvincularSegundaEtapa', $pessoa->id) }}">
+                                                <i class="fas fa-trash"></i> Desvincular
                                             </button>
                                         </td>
                                     </tr>
@@ -166,17 +168,33 @@
 
 <script>
     // Função para desvincular a pessoa da sala
-    function desvincular(element, rota) {
+    function desvincular(element) {
+
+        var rota = $(element).attr('rota');
+
         $(element).attr('disabled', 'true'); // impede um segundo clique
 
-        $.ajax({
-            url: rota
-        })
-        .success((data) => {
-            console.log(data);
-        });
-        .error((data) => {
-            console.log(data);
+        $.ajax({ // envia a requisição para a rota que vem do botão, essa rota retorna um json
+            url: rota,
+            dataType: 'json',
+            success: (data) => { // se der certo, mostra mensagem de sucesso, depois exclui o item
+                var closestTr = $(element).closest('tr');
+
+                closestTr.html(`
+                    <td colspan="3" class="text-center alert-success">` + data + `</td>
+                `);
+
+                setTimeout(() => {
+                    $(closestTr).fadeOut();
+                }, "1000");
+            },
+            error: (data) => { // se der errado, mostra mensagem de erro genérica
+                var closestTr = $(element).closest('tr');
+
+                closestTr.html(`
+                    <td colspan="3" class="text-center alert-danger">Houve um erro ao tentar desvincular, tente novamente!</td>
+                `);
+            }
         });
     }
 </script>

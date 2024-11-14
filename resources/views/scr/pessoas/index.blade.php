@@ -141,7 +141,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header btn-danger">
-                                                <h3 style="color: white">Tem certeza que deseja excluir a pessoa <strong>{{ $pessoa->nome }}</strong>?</h3>
+                                                <h3 style="color: white">Tem certeza que deseja excluir a pessoa <strong>{{ $pessoa->nome }} {{ $pessoa->sobrenome }}</strong>?</h3>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <form action="{{ route('pessoas.destroy', $pessoa->id) }}" method="POST">

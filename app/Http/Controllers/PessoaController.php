@@ -108,9 +108,19 @@ class PessoaController extends Controller
         }
     }
 
-    public function destroy(Pessoa $pessoa)
+    public function destroy($id)
     {
-        //
+        try {
+
+            Pessoa::findOrFail($id)->delete();
+
+            Alert::toast('Cadastro excluído com sucesso!', 'success');
+            return redirect()->back();
+
+        } catch (\Exception $ex) {
+            Alert::error('Erro!', $ex->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function desvincularPrimeiraEtapa($id)

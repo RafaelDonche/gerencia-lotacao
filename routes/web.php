@@ -30,6 +30,8 @@ Route::group(['prefix' => '/salas', 'as' => 'salas.'], function () {
     Route::get('/edit/{id}', [SalaController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [SalaController::class, 'update'])->name('update');
     Route::post('/destroy/{id}', [SalaController::class, 'destroy'])->name('destroy');
+    Route::post('/vincularParticipantesEtapa1/{id}', [SalaController::class, 'vincularParticipantesEtapa1'])->name('vincularParticipantesEtapa1');
+    Route::post('/vincularParticipantesEtapa2/{id}', [SalaController::class, 'vincularParticipantesEtapa2'])->name('vincularParticipantesEtapa2');
 });
 
 Route::group(['prefix' => '/espacoCafes', 'as' => 'espacoCafes.'], function () {

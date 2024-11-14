@@ -132,7 +132,7 @@
                                                 onclick="desvincular(this)"
                                                 rota="{{ route('pessoas.desvincularPrimeiraEtapa', $pessoa->id) }}"
                                                 nome-div="div-etapa1">
-                                                Desvincular <i class="fas fa-trash"></i>
+                                                <i class="fas fa-trash"></i> Desvincular
                                             </button>
                                         </td>
                                     </tr>
@@ -146,7 +146,7 @@
                                                 onclick="desvincular(this)"
                                                 rota="{{ route('pessoas.desvincularSegundaEtapa', $pessoa->id) }}"
                                                 nome-div="div-etapa2">
-                                                Desvincular <i class="fas fa-trash"></i>
+                                                <i class="fas fa-trash"></i> Desvincular
                                             </button>
                                         </td>
                                     </tr>
@@ -181,7 +181,7 @@
                                                 onclick="desvincular(this)"
                                                 rota="{{ route('pessoas.desvincularPrimeiroIntervalo', $pessoa->id) }}"
                                                 nome-div="div-intervalo1">
-                                                Desvincular <i class="fas fa-trash"></i>
+                                                <i class="fas fa-trash"></i> Desvincular
                                             </button>
                                         </td>
                                     </tr>
@@ -195,7 +195,7 @@
                                                 onclick="desvincular(this)"
                                                 rota="{{ route('pessoas.desvincularSegundoIntervalo', $pessoa->id) }}"
                                                 nome-div="div-intervalo2">
-                                                Desvincular <i class="fas fa-trash"></i>
+                                                <i class="fas fa-trash"></i> Desvincular
                                             </button>
                                         </td>
                                     </tr>
@@ -214,24 +214,24 @@
 @section('scripts')
 
 <script>
-    // Função para desvincular a pessoa da sala
-    function desvincular(element,) {
+    // Função para desvincular a pessoa da sala ou espaço de café
+    function desvincular(element) {
 
         var rota = $(element).attr('rota');
         var nomeDiv = $(element).attr('nome-div');
 
         $(element).attr('disabled', 'true'); // impede um segundo clique
 
-        $.ajax({
+        $.ajax({// envia a requisição para a rota que vem do botão, essa rota retorna um json
             url: rota,
             dataType: 'json',
-            success: (data) => {
+            success: (data) => { // se der certo, mostra mensagem de sucesso, depois exclui o item e mostra o select
                 var closestTr = $(element).closest('tr');
                 var div = $('#' + nomeDiv);
                 var select = div.find('select').first();
 
                 closestTr.html(`
-                    <td colspan="3" class="text-center alert-primary">` + data + `</td>
+                    <td colspan="3" class="text-center alert-success">` + data + `</td>
                 `);
 
                 setTimeout(() => {
@@ -240,14 +240,12 @@
                     div.fadeIn();
                 }, "1000");
             },
-            error: (data) => {
+            error: (data) => { // se der errado, mostra mensagem de erro genérica
                 var closestTr = $(element).closest('tr');
 
                 closestTr.html(`
                     <td colspan="3" class="text-center alert-danger">Houve um erro ao tentar desvincular, tente novamente!</td>
                 `);
-
-                console.log(data);
             }
         });
     }
