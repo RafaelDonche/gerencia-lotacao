@@ -34,9 +34,9 @@ class Pessoa extends Model
         return $this->belongsTo(Sala::class, 'id_segunda_sala');
     }
 
-    public function primero_intervalo()
+    public function primeiro_intervalo()
     {
-        return $this->belongsTo(EspacoCafe::class, 'id_primero_intervalo');
+        return $this->belongsTo(EspacoCafe::class, 'id_primeiro_intervalo');
     }
 
     public function segundo_intervalo()

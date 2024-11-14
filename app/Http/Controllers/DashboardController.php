@@ -14,7 +14,8 @@ class DashboardController extends Controller
             return view('scr.dashboard');
 
         } catch (\Exception $ex) {
-            return Alert::error('Erro!', $ex->getMessage());
+            Alert::error('Erro!', $ex->getMessage());
+            return redirect()->back();
         }
     }
 }

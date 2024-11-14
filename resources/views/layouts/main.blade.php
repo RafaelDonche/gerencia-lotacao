@@ -23,7 +23,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
             <a class="nav-link {{ str_contains(Route::current()->uri, 'dashboard') ? 'link-active' : '' }}"
                 href="{{ route('dashboard') }}">Dashboard</a>
@@ -37,7 +37,7 @@
     </div>
 
     <main class="content py-0">
-        <div class="container">
+        <div class="container p-0">
             @include('sweetalert::alert')
             @yield('content')
         </div>
@@ -55,6 +55,47 @@
     <script src="{{ asset('js/prevent_multiple_submits.js') }}"></script>
     <script src="{{ asset('js/datatables.min.js') }}"></script>
     <script src="{{ asset('select2-4.1.0/dist/js/select2.min.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                language: {
+                    noResults: function() {
+                        return "Nenhum resultado encontrado";
+                    }
+                },
+                closeOnSelect: true,
+                width: '100%',
+            });
+
+            $('.select2-multiple').select2({
+                language: {
+                    noResults: function() {
+                        return "Nenhum resultado encontrado";
+                    }
+                },
+                closeOnSelect: false,
+                width: '100%',
+            });
+
+            $('.datatable').DataTable({
+                oLanguage: {
+                    sLengthMenu: "Mostrar _MENU_ registros por página",
+                    sZeroRecords: "Nenhum registro encontrado",
+                    sInfo: "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+                    sInfoEmpty: "Mostrando 0 / 0 de 0 registros",
+                    sInfoFiltered: "(filtrado de _MAX_ registros)",
+                    sSearch: "Pesquisar: ",
+                    oPaginate: {
+                        sFirst: "Início",
+                        sPrevious: "Anterior",
+                        sNext: "Próximo",
+                        sLast: "Último"
+                    }
+                },
+            });
+        });
+    </script>
 
     @yield('scripts')
 </body>

@@ -14,7 +14,7 @@
                     <h4>Adicionar uma nova sala</h4>
                     <hr class="mt-0">
                 </div>
-                <div class="col-md-6 mb-2">
+                <div class="col-md-6 mb-3">
                     <label class="form-label" for="nome">Nome</label>
                     <input class="form-control @error('nome') is-invalid @enderror" type="text" placeholder="Informe o nome de identificação"
                         name="nome" value="{{ old('nome') }}">
@@ -22,7 +22,7 @@
                         <div class="invalid-feedback">{{ $message }}</div><br>
                     @enderror
                 </div>
-                <div class="col-md-6 mb-2">
+                <div class="col-md-6 mb-3">
                     <label class="form-label" for="lotacao">Lotacao</label>
                     <input class="form-control @error('lotacao') is-invalid @enderror" type="number" placeholder="Informe a lotação máxima"
                         name="lotacao" value="{{ old('lotacao') }}">
@@ -36,6 +36,7 @@
             </div>
         </form>
     </div>
+
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
@@ -44,13 +45,12 @@
             </div>
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table" id="datatable">
+                    <table class="table datatable">
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Lotação</th>
-                                <th>Primeira <br> etapa</th>
-                                <th>Segunda <br> etapa</th>
+                                <th>Gerenciar participantes</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -60,17 +60,12 @@
                                     <td>{{ $sala->nome }}</td>
                                     <td>{{ $sala->lotacao }}</td>
                                     <td>
-                                        <a class="btn btn-primary" href="">
+                                        <a class="btn btn-primary" href="{{ route('salas.show', $sala->id) }}">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary" href="">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-secondary" data-toggle="modal" data-target="#modalEditar{{ $sala->id }}">
+                                        <a class="btn btn-secondary" href="{{ route('salas.edit', $sala->id) }}">
                                             <i class="fas fa-pen"></i>
                                         </a>
                                         <a class="btn btn-danger" data-toggle="modal" data-target="#modalExcluir{{ $sala->id }}">
@@ -78,7 +73,25 @@
                                         </a>
                                     </td>
                                 </tr>
-                                @include('components.modals.salas')
+
+                                {{-- modal de exclusão --}}
+                                <div class="modal fade" id="modalExcluir{{ $sala->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header btn-danger">
+                                                <h3 style="color: white">Tem certeza que deseja excluir a sala <strong>{{ $sala->nome }}</strong>?</h3>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <form action="{{ route('salas.destroy', $sala->id) }}" method="POST">
+                                                @csrf
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger btn-pill">Excluir</button>
+                                                    <button type="button" data-dismiss="modal" class="btn btn-secondary btn-pill">Cancelar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -88,28 +101,4 @@
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
-<script>
-    $(document).ready(function() {
-
-        $('#datatable').DataTable({
-            oLanguage: {
-                sLengthMenu: "Mostrar _MENU_ registros por página",
-                sZeroRecords: "Nenhum registro encontrado",
-                sInfo: "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-                sInfoEmpty: "Mostrando 0 / 0 de 0 registros",
-                sInfoFiltered: "(filtrado de _MAX_ registros)",
-                sSearch: "Pesquisar: ",
-                oPaginate: {
-                    sFirst: "Início",
-                    sPrevious: "Anterior",
-                    sNext: "Próximo",
-                    sLast: "Último"
-                }
-            },
-        });
-    });
-</script>
 @endsection

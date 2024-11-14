@@ -27,10 +27,10 @@ class CreatePessoasTable extends Migration
             $table->foreign('id_segunda_sala')->references('id')->on('salas');
 
             // Espaços de café
-            $table->bigInteger('id_primeiro_espaco')->unsigned()->nullable();
-            $table->foreign('id_primeiro_espaco')->references('id')->on('espaco_cafes');
-            $table->bigInteger('id_segundo_espaco')->unsigned()->nullable();
-            $table->foreign('id_segundo_espaco')->references('id')->on('espaco_cafes');
+            $table->bigInteger('id_primeiro_intervalo')->unsigned()->nullable();
+            $table->foreign('id_primeiro_intervalo')->references('id')->on('espaco_cafes');
+            $table->bigInteger('id_segundo_intervalo')->unsigned()->nullable();
+            $table->foreign('id_segundo_intervalo')->references('id')->on('espaco_cafes');
 
             $table->timestamps();
             $table->softDeletes();

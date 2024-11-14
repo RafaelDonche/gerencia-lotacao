@@ -23,12 +23,12 @@ class EspacoCafe extends Model
 
     protected $table = 'espaco_cafes';
 
-    public function intervalo1()
+    public function pessoas_intervalo1()
     {
         return $this->hasMany(Pessoa::class, 'id_primeiro_intervalo', 'id');
     }
 
-    public function intervalo2()
+    public function pessoas_intervalo2()
     {
         return $this->hasMany(Pessoa::class, 'id_segundo_intervalo', 'id');
     }
