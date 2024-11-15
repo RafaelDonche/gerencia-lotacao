@@ -19,7 +19,7 @@
                     <input class="form-control @error('nome') is-invalid @enderror" type="text" placeholder="Informe o nome"
                         name="nome" value="{{ old('nome') }}">
                     @error('nome')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
@@ -27,7 +27,7 @@
                     <input class="form-control @error('sobrenome') is-invalid @enderror" type="text" placeholder="Informe o sobrenome"
                         name="sobrenome" value="{{ old('sobrenome') }}">
                     @error('sobrenome')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
@@ -42,7 +42,7 @@
                         @endforeach
                     </select>
                     @error('id_primeira_sala')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
@@ -57,7 +57,7 @@
                         @endforeach
                     </select>
                     @error('id_segunda_sala')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
@@ -72,7 +72,7 @@
                         @endforeach
                     </select>
                     @error('id_primeiro_intervalo')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
@@ -87,7 +87,7 @@
                         @endforeach
                     </select>
                     @error('id_segundo_intervalo')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-12">
@@ -119,12 +119,12 @@
                                 <tr>
                                     <td>{{ $pessoa->nome }} {{ $pessoa->sobrenome }}</td>
                                     <td>
-                                        Primeira etapa: <strong>{{ $pessoa->id_primeira_sala != null ? 'sala '.$pessoa->primeira_sala->nome : '- não definido -' }}</strong> <br>
-                                        Segunda etapa: <strong>{{ $pessoa->id_segunda_sala != null ? 'sala '.$pessoa->segunda_sala->nome : '- não definido -' }}</strong>
+                                        Primeira etapa: <strong>{{ $pessoa->id_primeira_sala != null ? $pessoa->primeira_sala->nome : '- não definido -' }}</strong> <br>
+                                        Segunda etapa: <strong>{{ $pessoa->id_segunda_sala != null ? $pessoa->segunda_sala->nome : '- não definido -' }}</strong>
                                     </td>
                                     <td>
-                                        Primeiro intervalo: <strong>{{ $pessoa->id_primeiro_intervalo != null ? 'espaço '.$pessoa->primeiro_intervalo->nome : '- não definido -' }}</strong> <br>
-                                        Segundo intervalo: <strong>{{ $pessoa->id_segundo_intervalo != null ? 'espaço '.$pessoa->segundo_intervalo->nome : '- não definido -' }}</strong>
+                                        Primeiro intervalo: <strong>{{ $pessoa->id_primeiro_intervalo != null ? $pessoa->primeiro_intervalo->nome : '- não definido -' }}</strong> <br>
+                                        Segundo intervalo: <strong>{{ $pessoa->id_segundo_intervalo != null ? $pessoa->segundo_intervalo->nome : '- não definido -' }}</strong>
                                     </td>
                                     <td>
                                         <a class="btn btn-secondary" href="{{ route('pessoas.edit', $pessoa->id) }}">

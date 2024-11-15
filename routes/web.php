@@ -37,9 +37,12 @@ Route::group(['prefix' => '/salas', 'as' => 'salas.'], function () {
 Route::group(['prefix' => '/espacoCafes', 'as' => 'espacoCafes.'], function () {
     Route::get('/index', [EspacoCafeController::class, 'index'])->name('index');
     Route::post('/store', [EspacoCafeController::class, 'store'])->name('store');
+    Route::get('/show/{id}', [EspacoCafeController::class, 'show'])->name('show');
     Route::get('/edit/{id}', [EspacoCafeController::class, 'edit'])->name('edit');
     Route::post('/update/{id}', [EspacoCafeController::class, 'update'])->name('update');
     Route::post('/destroy/{id}', [EspacoCafeController::class, 'destroy'])->name('destroy');
+    Route::post('/vincularParticipantesIntervalo1/{id}', [EspacoCafeController::class, 'vincularParticipantesIntervalo1'])->name('vincularParticipantesIntervalo1');
+    Route::post('/vincularParticipantesIntervalo2/{id}', [EspacoCafeController::class, 'vincularParticipantesIntervalo2'])->name('vincularParticipantesIntervalo2');
 });
 
 Route::group(['prefix' => '/pessoas', 'as' => 'pessoas.'], function () {

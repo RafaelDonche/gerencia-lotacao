@@ -14,7 +14,7 @@
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Adicionar uma nova pessoa</h4>
+                    <h4>Informações disponíveis para edição</h4>
                     <hr class="mt-0">
                 </div>
                 <div class="col-md-6 mb-3">
@@ -22,7 +22,7 @@
                     <input class="form-control @error('nome') is-invalid @enderror" type="text"
                         name="nome" value="{{ $pessoa->nome }}">
                     @error('nome')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
@@ -30,7 +30,7 @@
                     <input class="form-control @error('sobrenome') is-invalid @enderror" type="text"
                         name="sobrenome" value="{{ $pessoa->sobrenome }}">
                     @error('sobrenome')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3" id="div-etapa1" style="{{ $pessoa->id_primeira_sala != null ? 'display: none;' : '' }}">
@@ -46,7 +46,7 @@
                         @endforeach
                     </select>
                     @error('id_primeira_sala')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3" id="div-etapa2" style="{{ $pessoa->id_segunda_sala != null ? 'display: none;' : '' }}">
@@ -62,7 +62,7 @@
                         @endforeach
                     </select>
                     @error('id_segunda_sala')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3" id="div-intervalo1" style="{{ $pessoa->id_primeiro_intervalo != null ? 'display: none;' : '' }}">
@@ -78,7 +78,7 @@
                         @endforeach
                     </select>
                     @error('id_primeiro_intervalo')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3" id="div-intervalo2" style="{{ $pessoa->id_segundo_intervalo != null ? 'display: none;' : '' }}">
@@ -94,7 +94,7 @@
                         @endforeach
                     </select>
                     @error('id_segundo_intervalo')
-                        <div class="invalid-feedback">{{ $message }}</div><br>
+                        <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-12">

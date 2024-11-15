@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SalaFormRequest;
-use App\Http\Requests\VinculacaoFormRequest;
+use App\Http\Requests\VinculacaoEtapa1FormRequest;
+use App\Http\Requests\VinculacaoEtapa2FormRequest;
 use App\Models\Pessoa;
 use App\Models\Sala;
 use Illuminate\Http\Request;
@@ -112,24 +113,14 @@ class SalaController extends Controller
         }
     }
 
-    public function vincularParticipantesEtapa1(VinculacaoFormRequest $request, $id)
+    public function vincularParticipantesEtapa1(VinculacaoEtapa1FormRequest $request, $id)
     {
         try {
 
-            $sala = Sala::find($id);
-
-            if (!$sala) {
-                Alert::toast('A sala não foi encontrada!', 'error');
-                return redirect()->back();
-            }
+            $sala = Sala::findorFail($id);
 
             $validated = $request->validated();
             $participantes = $validated['pessoas_etapa1'];
-
-            if (!is_array($participantes)) {
-                Alert::toast('Houve um erro ao obter os participantes selecionados!', 'error');
-                return redirect()->back();
-            }
 
             if ((count($sala->pessoas_etapa1) + count($participantes)) > $sala->lotacao) {
                 Alert::toast('A quantidade de participantes selecionados ultrapassou a lotação!', 'error');
@@ -153,24 +144,14 @@ class SalaController extends Controller
         }
     }
 
-    public function vincularParticipantesEtapa2(VinculacaoFormRequest $request, $id)
+    public function vincularParticipantesEtapa2(VinculacaoEtapa2FormRequest $request, $id)
     {
         try {
 
-            $sala = Sala::find($id);
-
-            if (!$sala) {
-                Alert::toast('A sala não foi encontrada!', 'error');
-                return redirect()->back();
-            }
+            $sala = Sala::findOrFail($id);
 
             $validated = $request->validated();
             $participantes = $validated['pessoas_etapa2'];
-
-            if (!is_array($participantes)) {
-                Alert::toast('Houve um erro ao obter os participantes selecionados!', 'error');
-                return redirect()->back();
-            }
 
             if ((count($sala->pessoas_etapa2) + count($participantes)) > $sala->lotacao) {
                 Alert::toast('A quantidade de participantes selecionados ultrapassou a lotação!', 'error');

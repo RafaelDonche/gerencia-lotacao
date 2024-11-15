@@ -4,14 +4,14 @@
 
 <div class="card">
     <div class="card-hearder">
-        <h2 class="text-title">Gerencie as salas que ocorrerão as etapas do treinamento</h2>
+        <h2 class="text-title">Gerencie os espaços de café que ocorrerão os intervalos do treinamento</h2>
     </div>
     <div class="card-body mb-3">
-        <form action="{{ route('salas.store') }}" method="POST">
+        <form action="{{ route('espacoCafes.store') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Adicionar uma nova sala</h4>
+                    <h4>Adicionar um novo espaço de café</h4>
                     <hr class="mt-0">
                 </div>
                 <div class="col-md-6 mb-3">
@@ -40,7 +40,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <h4>Listagem de salas cadastradas</h4>
+                <h4>Listagem de espaços de café cadastrados</h4>
                 <hr class="mt-0">
             </div>
             <div class="col-md-12">
@@ -54,37 +54,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($salas as $sala)
+                            @foreach ($espacos as $espaco)
                                 <tr>
-                                    <td>{{ $sala->nome }}</td>
-                                    <td>{{ $sala->lotacao }}</td>
+                                    <td>{{ $espaco->nome }}</td>
+                                    <td>{{ $espaco->lotacao }}</td>
                                     <td class="text-right">
-                                        <a class="btn btn-primary" href="{{ route('salas.show', $sala->id) }}">
+                                        <a class="btn btn-primary" href="{{ route('espacoCafes.show', $espaco->id) }}">
                                             <i class="fas fa-eye"></i> Gerenciar participantes
                                         </a>
-                                        <a class="btn btn-secondary" href="{{ route('salas.edit', $sala->id) }}">
+                                        <a class="btn btn-secondary" href="{{ route('espacoCafes.edit', $espaco->id) }}">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a class="btn btn-danger" data-toggle="modal" data-target="#modalExcluir{{ $sala->id }}">
+                                        <a class="btn btn-danger" data-toggle="modal" data-target="#modalExcluir{{ $espaco->id }}">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
 
                                 {{-- modal de exclusão --}}
-                                <div class="modal fade" id="modalExcluir{{ $sala->id }}">
+                                <div class="modal fade" id="modalExcluir{{ $espaco->id }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header btn-danger">
-                                                <h3 style="color: white">Tem certeza que deseja excluir a sala <strong>{{ $sala->nome }}</strong>?</h3>
+                                                <h3 style="color: white">Tem certeza que deseja excluir o espaço <strong>{{ $espaco->nome }}</strong>?</h3>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
-                                            <form action="{{ route('salas.destroy', $sala->id) }}" method="POST">
+                                            <form action="{{ route('espacoCafes.destroy', $espaco->id) }}" method="POST">
                                                 @csrf
                                                 <div class="modal-body">
                                                     <div class="col-md-12 text-justify">
-                                                        A exclusão de uma sala resulta na desvinculação de todas as pessoas que estão
-                                                        vinculadas a esta sala.
+                                                        A exclusão de um espaço de café resulta na desvinculação de todas as pessoas que estão
+                                                        vinculadas a esta espaço.
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">

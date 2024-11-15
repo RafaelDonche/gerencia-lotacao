@@ -8,6 +8,7 @@ use App\Models\Pessoa;
 use App\Models\Sala;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use function PHPUnit\Framework\throwException;
@@ -21,8 +22,8 @@ class PessoaController extends Controller
             $pessoas = Pessoa::get();
 
             // seleção de salas disponíveis para preencher os selects
-            $disponiveisEtapa1 = Sala::with('pessoas_etapa1')
-                ->having('lotacao', '>', 'count(pessoas_etapa1)')
+            $disponiveisEtapa1 = Sala::withCount('pessoas_etapa1')
+                ->having('lotacao', '>', 'pessoas_etapa1_count')
                 ->get();
             $disponiveisEtapa2 = Sala::with('pessoas_etapa2')
                 ->having('lotacao', '>', 'count(pessoas_etapa2)')
@@ -68,19 +69,19 @@ class PessoaController extends Controller
             $pessoa = Pessoa::findOrFail($id);
 
             // seleção de salas disponíveis para preencher os selects
-            $disponiveisEtapa1 = Sala::with('pessoas_etapa1')
-                ->having('lotacao', '>', 'count(pessoas_etapa1)')
+            $disponiveisEtapa1 = Sala::withCount('pessoas_etapa1')
+                ->having('pessoas_etapa1_count', '<', DB::raw('lotacao'))
                 ->get();
-            $disponiveisEtapa2 = Sala::with('pessoas_etapa2')
-                ->having('lotacao', '>', 'count(pessoas_etapa2)')
+            $disponiveisEtapa2 = Sala::withCount('pessoas_etapa2')
+                ->having('pessoas_etapa2_count', '<', DB::raw('lotacao'))
                 ->get();
 
             // seleção de espaços de café disponíveis para preencher os selects
-            $disponiveisIntervalo1 = EspacoCafe::with('pessoas_intervalo1')
-                ->having('lotacao', '>', 'count(pessoas_intervalo1)')
+            $disponiveisIntervalo1 = EspacoCafe::withCount('pessoas_intervalo1')
+                ->having('pessoas_intervalo1_count', '<', DB::raw('lotacao'))
                 ->get();
-            $disponiveisIntervalo2 = EspacoCafe::with('pessoas_intervalo2')
-                ->having('lotacao', '>', 'count(pessoas_intervalo2)')
+            $disponiveisIntervalo2 = EspacoCafe::withCount('pessoas_intervalo2')
+                ->having('pessoas_intervalo2_count', '<', DB::raw('lotacao'))
                 ->get();
 
             return view('scr.pessoas.edit', compact(
