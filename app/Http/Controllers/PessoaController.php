@@ -150,7 +150,7 @@ class PessoaController extends Controller
             return response()->json("Desvinculado com sucesso!");
 
         } catch (\Exception $ex) {
-            return response()->json($ex->getMessage(), 500);
+            return response()->json($ex->getMessage(), $ex->getCode());
         }
     }
 
@@ -165,7 +165,7 @@ class PessoaController extends Controller
             return response()->json("Desvinculado com sucesso!");
 
         } catch (\Exception $ex) {
-            return response()->json($ex->getMessage(), 500);
+            return response()->json($ex->getMessage(), $ex->getCode());
         }
     }
 
@@ -180,7 +180,7 @@ class PessoaController extends Controller
             return response()->json("Desvinculado com sucesso!");
 
         } catch (\Exception $ex) {
-            return response()->json($ex->getMessage(), 500);
+            return response()->json($ex->getMessage(), $ex->getCode());
         }
     }
 }

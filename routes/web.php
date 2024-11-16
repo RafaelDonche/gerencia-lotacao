@@ -22,6 +22,7 @@ Route::get('/', function() {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/obterDados', [DashboardController::class, 'obterDados'])->name('obterDados');
 
 Route::group(['prefix' => '/salas', 'as' => 'salas.'], function () {
     Route::get('/index', [SalaController::class, 'index'])->name('index');

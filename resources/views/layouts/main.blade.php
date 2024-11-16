@@ -24,23 +24,21 @@
 <body>
 
     <div class="container p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center" style="width: 100%;">
             <a class="nav-link {{ str_contains(Route::current()->uri, 'dashboard') ? 'link-active' : '' }}"
                 href="{{ route('dashboard') }}">Dashboard</a>
+            <a class="nav-link {{ str_contains(Route::current()->uri, 'pessoas') ? 'link-active' : '' }}"
+                href="{{ route('pessoas.index') }}">Pessoas</a>
             <a class="nav-link {{ str_contains(Route::current()->uri, 'salas') ? 'link-active' : '' }}"
                 href="{{ route('salas.index') }}">Salas</a>
             <a class="nav-link {{ str_contains(Route::current()->uri, 'espacoCafes') ? 'link-active' : '' }}"
                 href="{{ route('espacoCafes.index') }}">Espaços de café</a>
-            <a class="nav-link {{ str_contains(Route::current()->uri, 'pessoas') ? 'link-active' : '' }}"
-                href="{{ route('pessoas.index') }}">Pessoas</a>
         </nav>
     </div>
 
-    <main class="content py-0">
-        <div class="container p-0">
-            @include('sweetalert::alert')
-            @yield('content')
-        </div>
+    <main class="container p-0">
+        @include('sweetalert::alert')
+        @yield('content')
     </main>
 
     <!-- Popper.js -->
