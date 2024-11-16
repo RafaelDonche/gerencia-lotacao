@@ -28,7 +28,7 @@ class PessoaFormRequest extends FormRequest
             'nome.required' => 'O campo nome é obrigatório.',
             'nome.max' => 'O valor máximo para este campo é :max.',
 
-            'sobrenome.required' => 'O campo nome é obrigatório.',
+            'sobrenome.required' => 'O campo sobrenome é obrigatório.',
             'sobrenome.max' => 'O valor máximo para este campo é :max.',
 
             'id_primeira_sala.exists' => 'O item selecionado não existe.',

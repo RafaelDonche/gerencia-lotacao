@@ -28,9 +28,19 @@ class EspacoCafe extends Model
         return $this->hasMany(Pessoa::class, 'id_primeiro_intervalo', 'id');
     }
 
+    public function nomes_intervalo1()
+    {
+        return $this->hasMany(Pessoa::class, 'id_primeiro_intervalo', 'id')->select('nome');
+    }
+
     public function pessoas_intervalo2()
     {
         return $this->hasMany(Pessoa::class, 'id_segundo_intervalo', 'id');
+    }
+
+    public function nomes_intervalo2()
+    {
+        return $this->hasMany(Pessoa::class, 'id_segundo_intervalo', 'id')->select('nome');
     }
 
     // retorna a porcentagem da lotação do intervalos 1
@@ -56,5 +66,20 @@ class EspacoCafe extends Model
         $porcentagem_intervalo2 = $this->porcentagem_intervalo2();
 
         return ($porcentagem_intervalo1 + $porcentagem_intervalo2) / 2;
+    }
+
+    public static function filtrar($request)
+    {
+        $espacos = EspacoCafe::where(function ($query) use($request) {
+            if (isset($request->id)) {
+                $query->where('id', $request->id);
+            }
+            if (isset($request->nome)) {
+                $query->where('nome', 'like', '%'. $request->nome .'%');
+            }
+        })
+        ->get();
+
+        return $espacos;
     }
 }

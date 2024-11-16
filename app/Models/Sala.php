@@ -28,9 +28,19 @@ class Sala extends Model
         return $this->hasMany(Pessoa::class, 'id_primeira_sala', 'id');
     }
 
+    public function nomes_etapa1()
+    {
+        return $this->hasMany(Pessoa::class, 'id_primeira_sala', 'id')->select('nome');
+    }
+
     public function pessoas_etapa2()
     {
         return $this->hasMany(Pessoa::class, 'id_segunda_sala', 'id');
+    }
+
+    public function nomes_etapa2()
+    {
+        return $this->hasMany(Pessoa::class, 'id_segunda_sala', 'id')->select('nome');
     }
 
     public function etapa1_lotada()
@@ -76,5 +86,20 @@ class Sala extends Model
         $porcentagem_etapa2 = $this->porcentagem_etapa2();
 
         return ($porcentagem_etapa1 + $porcentagem_etapa2) / 2;
+    }
+
+    public static function filtrar($request)
+    {
+        $salas = Sala::where(function ($query) use($request) {
+            if (isset($request->id)) {
+                $query->where('id', $request->id);
+            }
+            if (isset($request->nome)) {
+                $query->where('nome', 'like', '%'. $request->nome .'%');
+            }
+        })
+        ->get();
+
+        return $salas;
     }
 }

@@ -43,4 +43,22 @@ class Pessoa extends Model
     {
         return $this->belongsTo(EspacoCafe::class, 'id_segundo_intervalo');
     }
+
+    public static function filtrar($request)
+    {
+        $pessoas = Pessoa::where(function ($query) use($request) {
+            if (isset($request->id)) {
+                $query->where('id', $request->id);
+            }
+            if (isset($request->nome)) {
+                $query->where('nome', 'like', '%'. $request->nome .'%');
+            }
+            if (isset($request->sobrenome)) {
+                $query->where('nome', 'like', '%'. $request->sobrenome .'%');
+            }
+        })
+        ->get();
+
+        return $pessoas;
+    }
 }
