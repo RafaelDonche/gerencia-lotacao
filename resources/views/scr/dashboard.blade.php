@@ -283,7 +283,8 @@
                                 data: data.alocacaoPessoas,
                                 borderColor: "#2c2cff",
                                 backgroundColor: "#2c2cff9c",
-                                borderWidth: 2
+                                borderWidth: 2,
+                                borderRadius: 5
                             }
                         ]
                     },

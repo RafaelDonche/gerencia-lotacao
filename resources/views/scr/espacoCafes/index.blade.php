@@ -2,6 +2,21 @@
 
 @section('content')
 
+<style>
+    .progress-bar {
+        margin: 1rem 0.5rem;
+        width: 40px;
+        height: 18px;
+        background-color: #DCDCDD;
+        border-radius: 50px;
+    }
+    .loaded-progress {
+        height: 18px;
+        background-color: #2C6E49;
+        border-radius: 50px;
+    }
+</style>
+
 <div class="card">
     <div class="card-hearder">
         <h2 class="text-title">Gerencie os espaços de café que ocorrerão os intervalos do treinamento</h2>
@@ -49,7 +64,8 @@
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Lotação</th>
+                                <th>Lotação primeiro intervalo</th>
+                                <th>Lotação segundo intervalo</th>
                                 <th class="text-right">Ações</th>
                             </tr>
                         </thead>
@@ -57,7 +73,24 @@
                             @foreach ($espacos as $espaco)
                                 <tr>
                                     <td>{{ $espaco->nome }}</td>
-                                    <td>{{ $espaco->lotacao }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {{ count($espaco->pessoas_intervalo1) }}
+                                            <div class="progress-bar">
+                                                <div class="loaded-progress" style="width: {{ $espaco->porcentagem_intervalo1() }}%;"></div>
+                                            </div>
+                                            {{ $espaco->lotacao }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {{ count($espaco->pessoas_intervalo2) }}
+                                            <div class="progress-bar">
+                                                <div class="loaded-progress" style="width: {{ $espaco->porcentagem_intervalo2() }}%;"></div>
+                                            </div>
+                                            {{ $espaco->lotacao }}
+                                        </div>
+                                    </td>
                                     <td class="text-right">
                                         <a class="btn btn-primary" href="{{ route('espacoCafes.show', $espaco->id) }}">
                                             <i class="fas fa-eye"></i> Gerenciar participantes

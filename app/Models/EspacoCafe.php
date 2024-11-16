@@ -33,14 +33,27 @@ class EspacoCafe extends Model
         return $this->hasMany(Pessoa::class, 'id_segundo_intervalo', 'id');
     }
 
+    // retorna a porcentagem da lotação do intervalos 1
+    public function porcentagem_intervalo1()
+    {
+        $qnt = count($this->pessoas_intervalo1);
+
+        return $qnt != 0 ? ($qnt/$this->lotacao) * 100 : 0;
+    }
+
+    // retorna a porcentagem da lotação do intervalos 2
+    public function porcentagem_intervalo2()
+    {
+        $qnt = count($this->pessoas_intervalo2);
+
+        return $qnt != 0 ? ($qnt/$this->lotacao) * 100 : 0;
+    }
+
     // retorna a porcentagem média de lotação entre os intervalos 1 e 2
     public function media_lotacao()
     {
-        $qnt_intervalo1 = count($this->pessoas_intervalo1);
-        $qnt_intervalo2 = count($this->pessoas_intervalo2);
-
-        $porcentagem_intervalo1 = $qnt_intervalo1 != 0 ? ($qnt_intervalo1/$this->lotacao) * 100 : 0;
-        $porcentagem_intervalo2 = $qnt_intervalo2 != 0 ? ($qnt_intervalo2/$this->lotacao) * 100 : 0;
+        $porcentagem_intervalo1 = $this->porcentagem_intervalo1();
+        $porcentagem_intervalo2 = $this->porcentagem_intervalo2();
 
         return ($porcentagem_intervalo1 + $porcentagem_intervalo2) / 2;
     }

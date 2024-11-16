@@ -2,6 +2,21 @@
 
 @section('content')
 
+<style>
+    .progress-bar {
+        margin: 1rem 0.5rem;
+        width: 40px;
+        height: 18px;
+        background-color: #DCDCDD;
+        border-radius: 50px;
+    }
+    .loaded-progress {
+        height: 18px;
+        background-color: #2C6E49;
+        border-radius: 50px;
+    }
+</style>
+
 <div class="card">
     <div class="card-hearder">
         <h2 class="text-title">Gerencie as salas que ocorrerão as etapas do treinamento</h2>
@@ -49,7 +64,8 @@
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Lotação</th>
+                                <th>Lotação primeira etapa</th>
+                                <th>Lotação segunda etapa</th>
                                 <th class="text-right">Ações</th>
                             </tr>
                         </thead>
@@ -57,7 +73,24 @@
                             @foreach ($salas as $sala)
                                 <tr>
                                     <td>{{ $sala->nome }}</td>
-                                    <td>{{ $sala->lotacao }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {{ count($sala->pessoas_etapa1) }}
+                                            <div class="progress-bar">
+                                                <div class="loaded-progress" style="width: {{ $sala->porcentagem_etapa1() }}%;"></div>
+                                            </div>
+                                            {{ $sala->lotacao }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {{ count($sala->pessoas_etapa2) }}
+                                            <div class="progress-bar">
+                                                <div class="loaded-progress" style="width: {{ $sala->porcentagem_etapa2() }}%;"></div>
+                                            </div>
+                                            {{ $sala->lotacao }}
+                                        </div>
+                                    </td>
                                     <td class="text-right">
                                         <a class="btn btn-primary" href="{{ route('salas.show', $sala->id) }}">
                                             <i class="fas fa-eye"></i> Gerenciar participantes

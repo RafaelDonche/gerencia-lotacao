@@ -36,30 +36,20 @@ class DashboardController extends Controller
                 ->orWhereNull('id_segundo_intervalo')
                 ->count();
 
-            $arrayMediasSalas = [];
             $qntSalasCheias = 0;
             $qntSalasCheiasEtapa1 = 0;
             $qntSalasCheiasEtapa2 = 0;
             $qntSalasVazias = 0;
             foreach ($salas as $sala) {
-                array_push($arrayMediasSalas, $sala->media_lotacao());
                 $qntSalasCheias = $sala->lotada() ? $qntSalasCheias + 1 : $qntSalasCheias;
                 $qntSalasCheiasEtapa1 = $sala->etapa1_lotada() ? $qntSalasCheiasEtapa1 + 1 : $qntSalasCheiasEtapa1;
                 $qntSalasCheiasEtapa2 = $sala->etapa2_lotada() ? $qntSalasCheiasEtapa2 + 1 : $qntSalasCheiasEtapa2;
                 $qntSalasVazias = $sala->vazia() ? $qntSalasVazias + 1 : $qntSalasVazias;
             }
 
-            $arrayMediasEspacos = [];
-            foreach ($espacos as $espaco) {
-                array_push($arrayMediasEspacos, $espaco->media_lotacao());
-            }
-
-            $mediaLotacaoSalas = $math->formatarPorcentagem(array_sum($arrayMediasSalas) / count($arrayMediasSalas));
-            $mediaLotacaoEspacos = $math->formatarPorcentagem(array_sum($arrayMediasEspacos) / count($arrayMediasEspacos));
-
             return view('scr.dashboard', compact(
                 'salas', 'espacos', 'pessoas',
-                'totalPessoasCompletos', 'totalPessoasincompletos', 'mediaLotacaoSalas', 'mediaLotacaoEspacos',
+                'totalPessoasCompletos', 'totalPessoasincompletos',
                 'qntSalasCheias', 'qntSalasCheiasEtapa1', 'qntSalasCheiasEtapa2', 'qntSalasVazias'
             ));
 

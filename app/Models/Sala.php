@@ -53,14 +53,27 @@ class Sala extends Model
         return (count($this->pessoas_etapa1) == 0) && (count($this->pessoas_etapa2) == 0) ? true : false;
     }
 
+    // retorna a porcentagem da lotação da etapas 1
+    public function porcentagem_etapa1()
+    {
+        $qnt = count($this->pessoas_etapa1);
+
+        return $qnt != 0 ? ($qnt/$this->lotacao) * 100 : 0;
+    }
+
+    // retorna a porcentagem da lotação da etapas 2
+    public function porcentagem_etapa2()
+    {
+        $qnt = count($this->pessoas_etapa2);
+
+        return $qnt != 0 ? ($qnt/$this->lotacao) * 100 : 0;
+    }
+
     // retorna a porcentagem média de lotação entre as etapas 1 e 2
     public function media_lotacao()
     {
-        $qnt_etapa1 = count($this->pessoas_etapa1);
-        $qnt_etapa2 = count($this->pessoas_etapa2);
-
-        $porcentagem_etapa1 = $qnt_etapa1 != 0 ? ($qnt_etapa1/$this->lotacao) * 100 : 0;
-        $porcentagem_etapa2 = $qnt_etapa2 != 0 ? ($qnt_etapa2/$this->lotacao) * 100 : 0;
+        $porcentagem_etapa1 = $this->porcentagem_etapa1();
+        $porcentagem_etapa2 = $this->porcentagem_etapa2();
 
         return ($porcentagem_etapa1 + $porcentagem_etapa2) / 2;
     }
