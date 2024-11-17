@@ -6,7 +6,8 @@ Este sistema é uma interface de gerenciamento de lotação das salas e espaços
 - Laravel;
 - MySQL;
 - HTML, CSS, Bootstrap 4;
-- Javascript, Jquery, Chart.js.
+- Javascript, Jquery;
+- Chart.js, Datatable Responsive, Select2.
 
 Neste sistema possui:
 
