@@ -15,9 +15,12 @@ Neste sistema possui:
 - Dashboard de informações;
 - API REST do CRUD das entidades;
 - Persistência em banco de dados;
-- Testes unitários.
+- Testes unitários;
+- Laravel Sail para ambiente virtualizado em docker.
 
 Este é um sistema protótipo.
+Para receber um sistema com ambiente docker é importante saber que a máquina deve estar configurada para receber o projeto.
+Neste caso, o servidor deve ter PHP e composer. Leia a documentação do Laravel Sail para mais informações.
 
 ## Manual de instalação
 
@@ -36,6 +39,7 @@ php artisan key:generate
 ```
 
 Configure as variáveis de ambiente do seu bando de dados (MySQL).
+Adicione os atributos APP_PORT e FORWARD_DB_PORT referente ao docker.
 
 - Passo 3 -> Instale a aplicação
 
@@ -43,7 +47,13 @@ Configure as variáveis de ambiente do seu bando de dados (MySQL).
 composer update
 ```
 
-- Passo 4 -> Rode as migrations e seeders
+- Passo 4 -> Inicie os containers
+
+```bash
+./vendor/bin/sail up -d
+```
+
+- Passo 5 -> Rode as migrations e seeders
 
 ```bash
 php artisan migrate --seed
