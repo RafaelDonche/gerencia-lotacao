@@ -19,6 +19,7 @@ Neste sistema possui:
 - Laravel Sail para ambiente virtualizado em docker.
 
 Este é um sistema protótipo.
+
 Para receber um sistema com ambiente docker é importante saber que a máquina deve estar configurada para receber o projeto.
 Neste caso, o servidor deve ter PHP e composer. Leia a documentação do Laravel Sail para mais informações.
 
@@ -39,6 +40,7 @@ php artisan key:generate
 ```
 
 Configure as variáveis de ambiente do seu bando de dados (MySQL).
+
 Adicione os atributos APP_PORT e FORWARD_DB_PORT referente ao docker.
 
 - Passo 3 -> Instale a aplicação
