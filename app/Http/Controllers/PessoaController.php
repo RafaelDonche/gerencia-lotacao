@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use stdClass;
 
 use function PHPUnit\Framework\throwException;
 
@@ -128,11 +129,38 @@ class PessoaController extends Controller
     {
         try {
 
-            Pessoa::findOrFail($id)->update([
+            $pessoa = Pessoa::find($id);
+
+            if (!$pessoa) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            if (!$pessoa->id_primeira_sala) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $sala = Sala::find($pessoa->id_primeira_sala);
+
+            if (!$sala) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $mostra_form = $sala->etapa1_lotada();
+            $total = count($sala->pessoas_etapa1);
+
+            $pessoa->update([
                 'id_primeira_sala' => null
             ]);
 
-            return response()->json("Desvinculado com sucesso!");
+            $resposta = new stdClass();
+            $resposta->mensagem = "Desvinculado com sucesso!";
+            $resposta->id_participante = $pessoa->id;
+            $resposta->nome_participante = $pessoa->nome . ' ' . $pessoa->sobrenome;
+            $resposta->etapa = 1;
+            $resposta->mostra_form = $mostra_form;
+            $resposta->total = $total - 1;
+
+            return response()->json($resposta);
 
         } catch (\Exception $ex) {
             return response()->json($ex->getMessage(), $ex->getCode());
@@ -143,11 +171,38 @@ class PessoaController extends Controller
     {
         try {
 
-            Pessoa::findOrFail($id)->update([
+            $pessoa = Pessoa::find($id);
+
+            if (!$pessoa) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            if (!$pessoa->id_segunda_sala) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $sala = Sala::find($pessoa->id_segunda_sala);
+
+            if (!$sala) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $mostra_form = $sala->etapa2_lotada();
+            $total = count($sala->pessoas_etapa2);
+
+            $pessoa->update([
                 'id_segunda_sala' => null
             ]);
 
-            return response()->json("Desvinculado com sucesso!");
+            $resposta = new stdClass();
+            $resposta->mensagem = "Desvinculado com sucesso!";
+            $resposta->id_participante = $pessoa->id;
+            $resposta->nome_participante = $pessoa->nome . ' ' . $pessoa->sobrenome;
+            $resposta->etapa = 2;
+            $resposta->mostra_form = $mostra_form;
+            $resposta->total = $total - 1;
+
+            return response()->json($resposta);
 
         } catch (\Exception $ex) {
             return response()->json($ex->getMessage(), $ex->getCode());
@@ -158,11 +213,38 @@ class PessoaController extends Controller
     {
         try {
 
-            Pessoa::findOrFail($id)->update([
+            $pessoa = Pessoa::find($id);
+
+            if (!$pessoa) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            if (!$pessoa->id_primeiro_intervalo) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $espaco = EspacoCafe::find($pessoa->id_primeiro_intervalo);
+
+            if (!$espaco) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $mostra_form = $espaco->intervalo1_lotado();
+            $total = count($espaco->pessoas_intervalo1);
+
+            $pessoa->update([
                 'id_primeiro_intervalo' => null
             ]);
 
-            return response()->json("Desvinculado com sucesso!");
+            $resposta = new stdClass();
+            $resposta->mensagem = "Desvinculado com sucesso!";
+            $resposta->id_participante = $pessoa->id;
+            $resposta->nome_participante = $pessoa->nome . ' ' . $pessoa->sobrenome;
+            $resposta->intervalo = 1;
+            $resposta->mostra_form = $mostra_form;
+            $resposta->total = $total - 1;
+
+            return response()->json($resposta);
 
         } catch (\Exception $ex) {
             return response()->json($ex->getMessage(), $ex->getCode());
@@ -173,11 +255,38 @@ class PessoaController extends Controller
     {
         try {
 
-            Pessoa::findOrFail($id)->update([
+            $pessoa = Pessoa::find($id);
+
+            if (!$pessoa) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            if (!$pessoa->id_segundo_intervalo) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $espaco = EspacoCafe::find($pessoa->id_segundo_intervalo);
+
+            if (!$espaco) {
+                return response()->json("Não encontrado, atualize a página.", 404);
+            }
+
+            $mostra_form = $espaco->intervalo2_lotado();
+            $total = count($espaco->pessoas_intervalo2);
+
+            $pessoa->update([
                 'id_segundo_intervalo' => null
             ]);
 
-            return response()->json("Desvinculado com sucesso!");
+            $resposta = new stdClass();
+            $resposta->mensagem = "Desvinculado com sucesso!";
+            $resposta->id_participante = $pessoa->id;
+            $resposta->nome_participante = $pessoa->nome . ' ' . $pessoa->sobrenome;
+            $resposta->intervalo = 2;
+            $resposta->mostra_form = $mostra_form;
+            $resposta->total = $total - 1;
+
+            return response()->json($resposta);
 
         } catch (\Exception $ex) {
             return response()->json($ex->getMessage(), $ex->getCode());

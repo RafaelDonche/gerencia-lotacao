@@ -2,6 +2,13 @@
 
 @section('content')
 
+<style>
+    .badge {
+        /* font-size: .825rem; */
+        padding: .3em .3em
+    }
+</style>
+
 <div class="card">
     <div class="card-hearder">
         <h2 class="text-title">Gerencie os participantes do treinamento</h2>
@@ -117,7 +124,14 @@
                         <tbody>
                             @foreach ($pessoas as $pessoa)
                                 <tr>
-                                    <td>{{ $pessoa->nome }} {{ $pessoa->sobrenome }}</td>
+                                    <td>
+                                        {{ $pessoa->nome }} {{ $pessoa->sobrenome }} <br>
+                                        @if ($pessoa->cadastro_completo())
+                                            <span class="badge badge-success">(cadastro completo)</span>
+                                        @else
+                                            <span class="badge badge-danger">(cadastro imcompleto)</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         Primeira etapa: <strong>{{ $pessoa->id_primeira_sala != null ? $pessoa->primeira_sala->nome : '- não definido -' }}</strong> <br>
                                         Segunda etapa: <strong>{{ $pessoa->id_segunda_sala != null ? $pessoa->segunda_sala->nome : '- não definido -' }}</strong>

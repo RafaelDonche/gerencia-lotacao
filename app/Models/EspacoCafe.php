@@ -43,6 +43,26 @@ class EspacoCafe extends Model
         return $this->hasMany(Pessoa::class, 'id_segundo_intervalo', 'id')->select('nome');
     }
 
+    public function intervalo1_lotado()
+    {
+        return count($this->pessoas_intervalo1) >= $this->lotacao ? true : false;
+    }
+
+    public function intervalo2_lotado()
+    {
+        return count($this->pessoas_intervalo2) >= $this->lotacao ? true : false;
+    }
+
+    public function lotado()
+    {
+        return $this->intervalo1_lotado() && $this->intervalo2_lotado() ? true : false;
+    }
+
+    public function vazia()
+    {
+        return (count($this->pessoas_intervalo1) == 0) && (count($this->pessoas_intervalo2) == 0) ? true : false;
+    }
+
     // retorna a porcentagem da lotação do intervalos 1
     public function porcentagem_intervalo1()
     {

@@ -1,6 +1,8 @@
 ## Sobre o sistema
 
-Este sistema é uma interface de gerenciamento de lotação das salas e espaços de café que ocorrerão o treinamento. Tecnologias utilizadas:
+Este sistema é uma interface de gerenciamento de lotação das salas e espaços de café que ocorrerão o treinamento.
+
+### Tecnologias utilizadas:
 
 - PHP;
 - Laravel;
@@ -9,9 +11,11 @@ Este sistema é uma interface de gerenciamento de lotação das salas e espaços
 - Javascript, Jquery;
 - Chart.js, Datatable Responsive, Select2.
 
-Neste sistema possui:
+### Neste sistema possui:
 
 - CRUD das entidades Sala, EspacoCafe e Pessoa;
+- Regras para impedir a superlotação das salas e espaços de café;
+- Layout responsivo e dinâmico;
 - Dashboard de informações;
 - API REST do CRUD das entidades;
 - Persistência em banco de dados;

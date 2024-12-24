@@ -15,6 +15,11 @@
         background-color: #2C6E49;
         border-radius: 50px;
     }
+    .badge {
+        font-size: .825rem;
+        margin: 0 1rem;
+        padding: .3em .3em
+    }
 </style>
 
 <div class="card">
@@ -80,6 +85,9 @@
                                                 <div class="loaded-progress" style="width: {{ $sala->porcentagem_etapa1() }}%;"></div>
                                             </div>
                                             {{ $sala->lotacao }}
+                                            @if ($sala->etapa1_lotada())
+                                                <span class="badge badge-success">(lotada)</span>
+                                            @endif
                                         </div>
                                     </td>
                                     <td>
@@ -89,6 +97,9 @@
                                                 <div class="loaded-progress" style="width: {{ $sala->porcentagem_etapa2() }}%;"></div>
                                             </div>
                                             {{ $sala->lotacao }}
+                                            @if ($sala->etapa2_lotada())
+                                                <span class="badge badge-success">(lotada)</span>
+                                            @endif
                                         </div>
                                     </td>
                                     <td class="text-right">

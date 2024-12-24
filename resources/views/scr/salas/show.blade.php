@@ -26,68 +26,74 @@
                     <h4>Adicionar participante na primeira etapa</h4>
                     <hr class="mt-0">
                 </div>
-                @if (count($sala->pessoas_etapa1) < $sala->lotacao)
-                    <form action="{{ route('salas.vincularParticipantesEtapa1', $sala->id) }}" method="post" class="form_prevent_multiple_submits">
-                        @csrf
-                        <div class="col-md-12 mb-3">
-                            <label class="form-label" for="pessoas_etapa1">Participantes disponíveis</label>
-                            <select class="form-control select2-multiple @error('pessoas_etapa1') is-invalid @enderror"
-                                name="pessoas_etapa1[]" multiple="multiple" required>
-                                @foreach ($disponiveisEtapa1 as $d)
-                                    <option value="{{ $d->id }}"
-                                        @if(old('pessoas_etapa1'))
-                                            {{ in_array($d->id, old('pessoas_etapa1')) ? 'selected' : '' }}
-                                        @endif
-                                        >{{ $d->nome }} {{ $d->sobrenome }}</option>
-                                @endforeach
-                            </select>
-                            @error('pessoas_etapa1')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-12">
-                            <button class="btn btn-primary submit-button" type="submit">Salvar</button>
-                        </div>
-                    </form>
-                @else
-                    <div class="col-md-12">
-                        <p class="lotacao-max">A primeira etapa já está com lotação máxima!</p>
+                <form action="{{ route('salas.vincularParticipantesEtapa1', $sala->id) }}" method="post" class="form_prevent_multiple_submits" id="form_etapa1"
+                    @if ($sala->etapa1_lotada())
+                        style="display: none;"
+                    @endif>
+                    @csrf
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label" for="pessoas_etapa1">Participantes disponíveis</label>
+                        <select class="form-control select2-multiple @error('pessoas_etapa1') is-invalid @enderror"
+                            name="pessoas_etapa1[]" id="pessoas_etapa1" multiple="multiple" required>
+                            @foreach ($disponiveisEtapa1 as $d)
+                                <option value="{{ $d->id }}"
+                                    @if(old('pessoas_etapa1'))
+                                        {{ in_array($d->id, old('pessoas_etapa1')) ? 'selected' : '' }}
+                                    @endif
+                                    >{{ $d->nome }} {{ $d->sobrenome }}</option>
+                            @endforeach
+                        </select>
+                        @error('pessoas_etapa1')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                @endif
+                    <div class="col-md-12">
+                        <button class="btn btn-primary submit-button" type="submit">Salvar</button>
+                    </div>
+                </form>
+                <div class="col-md-12" id="aviso_etapa1_lotada"
+                    @if (!$sala->etapa1_lotada())
+                        style="display: none;"
+                    @endif>
+                    <p class="lotacao-max">A primeira etapa já está com lotação máxima!</p>
+                </div>
             </div>
             <div class="col-md-6 mb-3">
                 <div class="col-md-12">
                     <h4>Adicionar participante na segunda etapa</h4>
                     <hr class="mt-0">
                 </div>
-                @if (count($sala->pessoas_etapa2) < $sala->lotacao)
-                    <form action="{{ route('salas.vincularParticipantesEtapa2', $sala->id) }}" method="post" class="form_prevent_multiple_submits">
-                        @csrf
-                        <div class="col-md-12 mb-3">
-                            <label class="form-label" for="pessoas_etapa2">Participantes disponíveis</label>
-                            <select class="form-control select2-multiple @error('pessoas_etapa2') is-invalid @enderror"
-                                name="pessoas_etapa2[]" multiple="multiple" required>
-                                @foreach ($disponiveisEtapa2 as $d)
-                                    <option value="{{ $d->id }}"
-                                        @if(old('pessoas_etapa2'))
-                                            {{ in_array($d->id, old('pessoas_etapa2')) ? 'selected' : '' }}
-                                        @endif
-                                        >{{ $d->nome }} {{ $d->sobrenome }}</option>
-                                @endforeach
-                            </select>
-                            @error('pessoas_etapa2')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-12">
-                            <button class="btn btn-primary submit-button" type="submit">Salvar</button>
-                        </div>
-                    </form>
-                @else
-                    <div class="col-md-12">
-                        <p class="lotacao-max">A segunda etapa já está com lotação máxima!</p>
+                <form action="{{ route('salas.vincularParticipantesEtapa2', $sala->id) }}" method="post" class="form_prevent_multiple_submits" id="form_etapa2"
+                    @if ($sala->etapa2_lotada())
+                        style="display: none;"
+                    @endif>
+                    @csrf
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label" for="pessoas_etapa2">Participantes disponíveis</label>
+                        <select class="form-control select2-multiple @error('pessoas_etapa2') is-invalid @enderror"
+                            name="pessoas_etapa2[]" id="pessoas_etapa2" multiple="multiple" required>
+                            @foreach ($disponiveisEtapa2 as $d)
+                                <option value="{{ $d->id }}"
+                                    @if(old('pessoas_etapa2'))
+                                        {{ in_array($d->id, old('pessoas_etapa2')) ? 'selected' : '' }}
+                                    @endif
+                                    >{{ $d->nome }} {{ $d->sobrenome }}</option>
+                            @endforeach
+                        </select>
+                        @error('pessoas_etapa2')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                @endif
+                    <div class="col-md-12">
+                        <button class="btn btn-primary submit-button" type="submit">Salvar</button>
+                    </div>
+                </form>
+                <div class="col-md-12" id="aviso_etapa2_lotada"
+                    @if (!$sala->etapa2_lotada())
+                        style="display: none;"
+                    @endif>
+                    <p class="lotacao-max">A segunda etapa já está com lotação máxima!</p>
+                </div>
             </div>
         </div>
     </div>
@@ -96,7 +102,7 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <div class="col-md-12">
-                    <h4>Listagem de participantes da primeira etapa ({{ count($sala->pessoas_etapa1) }}/{{ $sala->lotacao }})</h4>
+                    <h4>Listagem de participantes da primeira etapa (<span id="contador_etapa1">{{ count($sala->pessoas_etapa1) }}</span>/{{ $sala->lotacao }})</h4>
                     <hr class="mt-0">
                 </div>
                 <div class="col-md-12">
@@ -128,7 +134,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <div class="col-md-12">
-                    <h4>Listagem de participantes da segunda etapa ({{ count($sala->pessoas_etapa2) }}/{{ $sala->lotacao }})</h4>
+                    <h4>Listagem de participantes da segunda etapa (<span id="contador_etapa2">{{ count($sala->pessoas_etapa2) }}</span>/{{ $sala->lotacao }})</h4>
                     <hr class="mt-0">
                 </div>
                 <div class="col-md-12">
@@ -181,11 +187,30 @@
                 var closestTr = $(element).closest('tr');
 
                 closestTr.html(`
-                    <td colspan="3" class="text-center alert-success">` + data + `</td>
+                    <td colspan="3" class="text-center alert-success">` + data.mensagem + `</td>
                 `);
+
+                let newOption = new Option(data.nome_participante, data.id_participante, false, false);
+
+                if (data.etapa == 1) {
+                    $('#contador_etapa1').html(data.total);
+                    $('#pessoas_etapa1').append(newOption).trigger('change');
+                    var form = $('#form_etapa1');
+                    var aviso = $('#aviso_etapa1_lotada');
+                }
+                if (data.etapa == 2) {
+                    $('#contador_etapa2').html(data.total);
+                    $('#pessoas_etapa2').append(newOption).trigger('change');
+                    var form = $('#form_etapa2');
+                    var aviso = $('#aviso_etapa2_lotada');
+                }
 
                 setTimeout(() => {
                     $(closestTr).fadeOut();
+                    if (data.mostra_form) {
+                        $(form).fadeIn();
+                        $(aviso).fadeOut();
+                    }
                 }, "1000");
             },
             error: (data) => { // se der errado, mostra mensagem de erro genérica

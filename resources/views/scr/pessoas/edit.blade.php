@@ -6,7 +6,7 @@
     <div class="card-hearder">
         <h2 class="text-title">
             <a class="btn btn-secondary btn-pill float-start" href="{{ route('pessoas.index') }}">Voltar</a>
-            Edição do participante <strong>{{ $pessoa->nome }}</strong>
+            Edição do participante <strong>{{ $pessoa->nome }} {{ $pessoa->sobrenome }}</strong>
         </h2>
     </div>
     <div class="card-body mb-3">

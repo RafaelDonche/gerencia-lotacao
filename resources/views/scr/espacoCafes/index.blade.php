@@ -15,6 +15,11 @@
         background-color: #2C6E49;
         border-radius: 50px;
     }
+    .badge {
+        font-size: .825rem;
+        margin: 0 1rem;
+        padding: .3em .3em
+    }
 </style>
 
 <div class="card">
@@ -80,6 +85,9 @@
                                                 <div class="loaded-progress" style="width: {{ $espaco->porcentagem_intervalo1() }}%;"></div>
                                             </div>
                                             {{ $espaco->lotacao }}
+                                            @if ($espaco->intervalo1_lotado())
+                                                <span class="badge badge-success">(lotada)</span>
+                                            @endif
                                         </div>
                                     </td>
                                     <td>
@@ -89,6 +97,9 @@
                                                 <div class="loaded-progress" style="width: {{ $espaco->porcentagem_intervalo2() }}%;"></div>
                                             </div>
                                             {{ $espaco->lotacao }}
+                                            @if ($espaco->intervalo2_lotado())
+                                                <span class="badge badge-success">(lotada)</span>
+                                            @endif
                                         </div>
                                     </td>
                                     <td class="text-right">

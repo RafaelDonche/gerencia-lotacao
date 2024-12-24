@@ -44,6 +44,18 @@ class Pessoa extends Model
         return $this->belongsTo(EspacoCafe::class, 'id_segundo_intervalo');
     }
 
+    public function cadastro_completo()
+    {
+        if (($this->id_primeira_sala != null) &&
+            ($this->id_segunda_sala != null) &&
+            ($this->id_primeiro_intervalo != null) &&
+            ($this->id_segundo_intervalo != null)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public static function filtrar($request)
     {
         $pessoas = Pessoa::where(function ($query) use($request) {
